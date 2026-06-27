@@ -55,6 +55,62 @@ type InstitutionsTableProps = {
   distanceOriginPoint: [number, number] | null;
 };
 
+function institutionHasExpandableDetail(): boolean {
+  return true;
+}
+
+function getTableColumnClassName(
+  columnId: string,
+  homeInstitutionSet: boolean,
+): string {
+  return cn(
+    columnId === 'institution' &&
+      (homeInstitutionSet ? 'w-[46%] sm:w-[32%]' : 'w-[62%] sm:w-[32%]'),
+    columnId === 'type' && 'hidden w-[16%] sm:table-cell',
+    columnId === 'reciprocity' &&
+      (homeInstitutionSet
+        ? 'hidden w-[14%] sm:table-cell'
+        : 'w-[32%] sm:w-[14%]'),
+    columnId === 'your-benefit' &&
+      (homeInstitutionSet ? 'w-[32%] sm:w-[14%]' : 'w-[18%] sm:w-[14%]'),
+    columnId === 'distance' &&
+      (homeInstitutionSet ? 'w-[22%] sm:w-[12%]' : 'w-[14%] sm:w-[12%]'),
+    columnId === 'notes' && 'hidden w-[18%] lg:table-cell',
+  );
+}
+
+function RowExpandChevron({
+  isExpanded,
+  hasDetail,
+  className,
+}: {
+  isExpanded: boolean;
+  hasDetail: boolean;
+  className?: string;
+}) {
+  if (!hasDetail) {
+    return (
+      <span className={cn('inline-block w-4 shrink-0', className)} aria-hidden />
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        'text-muted-foreground inline-flex size-4 shrink-0 items-center justify-center',
+        className,
+      )}
+      aria-hidden
+    >
+      {isExpanded ? (
+        <ChevronDown className="size-4" />
+      ) : (
+        <ChevronRight className="size-4" />
+      )}
+    </span>
+  );
+}
+
 export function InstitutionsTable({
   institutions,
   totalCount,
@@ -103,62 +159,41 @@ export function InstitutionsTable({
   const columns = useMemo<ColumnDef<Institution>[]>(
     () => [
       {
-        id: 'expand',
-        header: '',
-        enableSorting: false,
-        cell: ({ row }) => {
-          const isExpanded = expandedIds.has(row.original.id);
-          const formattedAddress = row.original.address
-            ? formatAddress(row.original.address)
-            : null;
-          const hasDetail =
-            hasContactInfo(row.original.contact) ||
-            Boolean(row.original.website) ||
-            Boolean(formattedAddress) ||
-            Boolean(row.original.accreditedThrough) ||
-            Boolean(row.original.source);
-
-          if (!hasDetail) {
-            return <span className="inline-block w-4" aria-hidden />;
-          }
-
-          return (
-            <span
-              className="text-muted-foreground inline-flex size-7 items-center justify-center"
-              aria-hidden
-            >
-              {isExpanded ? (
-                <ChevronDown className="size-4" />
-              ) : (
-                <ChevronRight className="size-4" />
-              )}
-            </span>
-          );
-        },
-      },
-      {
         id: 'institution',
         accessorFn: (row) => row.name,
         header: ({ column }) => (
-          <SortableTableHead column={column} label="Institution" />
+          <SortableTableHead
+            column={column}
+            label="Institution"
+            className="pl-5 sm:pl-6"
+          />
         ),
         cell: ({ row }) => {
           const isHomeRow = homeInstitution?.id === row.original.id;
+          const isExpanded = expandedIds.has(row.original.id);
+          const hasDetail = institutionHasExpandableDetail();
 
           return (
-            <div className="py-1">
-              <p className="flex items-start gap-1.5 font-medium break-words">
-                {isHomeRow ? (
-                  <Star
-                    className="mt-0.5 size-4 shrink-0 fill-[var(--neon-pink)] text-[var(--neon-pink)]"
-                    aria-label="Your home facility"
-                  />
-                ) : null}
-                <span>{row.original.name}</span>
-              </p>
-              <p className="text-muted-foreground text-xs break-words">
-                {formatLocation(row.original)}
-              </p>
+            <div className="flex items-start gap-1 py-1 sm:gap-2 sm:py-1.5">
+              <RowExpandChevron
+                className="mt-0.5"
+                isExpanded={isExpanded}
+                hasDetail={hasDetail}
+              />
+              <div className="min-w-0">
+                <p className="flex items-start gap-1.5 font-medium break-words">
+                  {isHomeRow ? (
+                    <Star
+                      className="mt-0.5 size-4 shrink-0 fill-[var(--neon-pink)] text-[var(--neon-pink)]"
+                      aria-label="Your home facility"
+                    />
+                  ) : null}
+                  <span>{row.original.name}</span>
+                </p>
+                <p className="text-muted-foreground text-xs break-words">
+                  {formatLocation(row.original)}
+                </p>
+              </div>
             </div>
           );
         },
@@ -334,14 +369,8 @@ export function InstitutionsTable({
                 <TableHead
                   key={header.id}
                   className={cn(
-                    'whitespace-normal',
-                    header.id === 'expand' && 'w-10 px-1',
-                    header.id === 'institution' && 'w-[30%]',
-                    header.id === 'type' && 'w-[16%]',
-                    header.id === 'reciprocity' && 'w-[14%]',
-                    header.id === 'your-benefit' && 'w-[14%]',
-                    header.id === 'distance' && 'w-[12%]',
-                    header.id === 'notes' && 'w-[18%]',
+                    'px-1 py-2 whitespace-normal sm:px-3 md:px-4',
+                    getTableColumnClassName(header.id, showBenefitColumn),
                   )}
                 >
                   {header.isPlaceholder
@@ -362,6 +391,8 @@ export function InstitutionsTable({
               isExpanded={expandedIds.has(row.original.id)}
               institution={row.original}
               cells={row.getVisibleCells()}
+              homeInstitution={homeInstitution}
+              showTheirTierInDetail={showBenefitColumn}
               onToggle={() => toggleExpanded(row.original.id)}
             />
           ))}
@@ -371,50 +402,40 @@ export function InstitutionsTable({
   );
 }
 
-function institutionHasExpandableDetail(institution: Institution): boolean {
-  const formattedAddress = institution.address
-    ? formatAddress(institution.address)
-    : null;
-
-  return (
-    hasContactInfo(institution.contact) ||
-    Boolean(institution.website) ||
-    Boolean(formattedAddress) ||
-    Boolean(institution.accreditedThrough) ||
-    Boolean(institution.source)
-  );
-}
-
 function getReciprocityRowBorderClass(
   reciprocity: InstitutionReciprocity,
 ): string {
   if (!reciprocity.participates) {
-    return 'border-l-4 border-l-transparent';
+    return 'border-l-2 border-l-transparent sm:border-l-4';
   }
 
   if (reciprocity.tier === 'free') {
-    return 'border-l-4 border-l-[var(--neon-green)]';
+    return 'border-l-2 border-l-[var(--neon-green)] sm:border-l-4';
   }
 
   if (reciprocity.tier === '100-or-50') {
-    return 'border-l-4 border-l-[var(--neon-lime)]';
+    return 'border-l-2 border-l-[var(--neon-lime)] sm:border-l-4';
   }
 
-  return 'border-l-4 border-l-[var(--neon-teal)]';
+  return 'border-l-2 border-l-[var(--neon-teal)] sm:border-l-4';
 }
 
 function FragmentRow({
   isExpanded,
   institution,
   cells,
+  homeInstitution,
+  showTheirTierInDetail,
   onToggle,
 }: {
   isExpanded: boolean;
   institution: Institution;
   cells: Cell<Institution, unknown>[];
+  homeInstitution: Institution | null;
+  showTheirTierInDetail: boolean;
   onToggle: () => void;
 }) {
-  const canExpand = institutionHasExpandableDetail(institution);
+  const canExpand = institutionHasExpandableDetail();
 
   return (
     <>
@@ -450,8 +471,11 @@ function FragmentRow({
           <TableCell
             key={cell.id}
             className={cn(
-              'align-top whitespace-normal',
-              cell.column.id === 'expand' && 'w-10 px-1',
+              'px-1 py-1.5 align-top whitespace-normal sm:px-3 sm:py-2 md:px-4',
+              getTableColumnClassName(
+                cell.column.id,
+                Boolean(homeInstitution),
+              ),
             )}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -464,7 +488,10 @@ function FragmentRow({
             colSpan={cells.length}
             className="w-full max-w-0 p-0 whitespace-normal"
           >
-            <InstitutionRowDetail institution={institution} />
+            <InstitutionRowDetail
+              institution={institution}
+              showTheirTier={showTheirTierInDetail}
+            />
           </TableCell>
         </TableRow>
       ) : null}

@@ -1,13 +1,27 @@
 import { Ban, Home, Sparkles, Ticket } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import type { MemberBenefit } from '@/lib/reciprocity/calculate-benefit';
+import {
+  MEMBER_BENEFIT_SHORT_LABELS,
+  type MemberBenefit,
+} from '@/lib/reciprocity/calculate-benefit';
 import { cn } from '@/lib/utils';
 
 type MemberBenefitBadgeProps = {
   benefit: MemberBenefit;
   className?: string;
 };
+
+function BenefitLabel({ benefit }: { benefit: MemberBenefit }) {
+  const shortLabel = MEMBER_BENEFIT_SHORT_LABELS[benefit.kind];
+
+  return (
+    <>
+      <span className="lg:hidden">{shortLabel}</span>
+      <span className="hidden lg:inline">{benefit.label}</span>
+    </>
+  );
+}
 
 export function MemberBenefitBadge({
   benefit,
@@ -24,7 +38,7 @@ export function MemberBenefitBadge({
         )}
       >
         <Ban />
-        {benefit.label}
+        <BenefitLabel benefit={benefit} />
       </Badge>
     );
   }
@@ -33,13 +47,14 @@ export function MemberBenefitBadge({
     return (
       <Badge
         variant="outline"
+        title={benefit.label}
         className={cn(
           'border-[color-mix(in_srgb,var(--neon-orange)_35%,white)] bg-[color-mix(in_srgb,var(--neon-orange)_15%,white)] text-[#7a3e00]',
           className,
         )}
       >
         <Home />
-        {benefit.label}
+        <BenefitLabel benefit={benefit} />
       </Badge>
     );
   }
@@ -54,7 +69,7 @@ export function MemberBenefitBadge({
         )}
       >
         <Ticket />
-        {benefit.label}
+        <BenefitLabel benefit={benefit} />
       </Badge>
     );
   }
@@ -69,7 +84,7 @@ export function MemberBenefitBadge({
         )}
       >
         <Sparkles />
-        {benefit.label}
+        <BenefitLabel benefit={benefit} />
       </Badge>
     );
   }
@@ -83,7 +98,7 @@ export function MemberBenefitBadge({
       )}
     >
       <Ticket />
-      {benefit.label}
+      <BenefitLabel benefit={benefit} />
     </Badge>
   );
 }

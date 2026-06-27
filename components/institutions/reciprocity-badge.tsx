@@ -23,7 +23,8 @@ export function ReciprocityBadge({
         )}
       >
         <Ban />
-        No reciprocity
+        <span className="lg:hidden">None</span>
+        <span className="hidden lg:inline">No reciprocity</span>
       </Badge>
     );
   }

@@ -29,5 +29,13 @@ describe('MemberBenefitBadge', () => {
       />,
     );
     expect(screen.getByText('Other benefits')).toBeInTheDocument();
+
+    rerender(
+      <MemberBenefitBadge
+        benefit={{ kind: 'home-facility', label: 'Membership' }}
+      />,
+    );
+    expect(screen.getByText('Membership')).toBeInTheDocument();
+    expect(screen.getByText('Home')).toBeInTheDocument();
   });
 });

@@ -25,6 +25,14 @@ export const MEMBER_BENEFIT_LABELS: Record<MemberBenefitKind, string> = {
   'home-facility': 'Membership',
 };
 
+export const MEMBER_BENEFIT_SHORT_LABELS: Record<MemberBenefitKind, string> = {
+  '50-discount': '50%',
+  'free-admission': 'Free',
+  'other-benefits': 'Other',
+  'no-reciprocity': 'None',
+  'home-facility': 'Home',
+};
+
 function getParticipatingTier(
   reciprocity: InstitutionReciprocity,
 ): ReciprocityTier | null {

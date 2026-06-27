@@ -1,12 +1,19 @@
 import type { ReactNode } from 'react';
 import { Mail, Phone } from 'lucide-react';
 
+import { ReciprocityBadge } from '@/components/institutions/reciprocity-badge';
+import { InstitutionTypeIcon } from '@/components/institutions/institution-type-icon';
 import type { Institution } from '@/lib/types/institution';
-import { formatAddress, hasContactInfo } from '@/lib/types/institution';
+import {
+  formatAddress,
+  hasContactInfo,
+  INSTITUTION_TYPE_LABELS,
+} from '@/lib/types/institution';
 import { cn } from '@/lib/utils';
 
 type InstitutionRowDetailProps = {
   institution: Institution;
+  showTheirTier?: boolean;
 };
 
 type DetailFieldProps = {
@@ -35,14 +42,34 @@ function DetailField({ label, children, contentClassName }: DetailFieldProps) {
 
 export function InstitutionRowDetail({
   institution,
+  showTheirTier = false,
 }: InstitutionRowDetailProps) {
   const showContact = hasContactInfo(institution.contact);
   const formattedAddress = institution.address
     ? formatAddress(institution.address)
     : null;
+  const notes = institution.reciprocity.notes?.trim();
 
   return (
-    <div className="institution-row-detail bg-muted/30 grid w-full min-w-0 grid-cols-1 gap-6 px-6 py-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="institution-row-detail bg-muted/30 grid w-full min-w-0 grid-cols-1 gap-6 px-4 py-4 sm:px-6 sm:grid-cols-2 lg:grid-cols-3">
+      {showTheirTier ? (
+        <div className="sm:hidden">
+          <DetailField label="Their tier">
+            <ReciprocityBadge reciprocity={institution.reciprocity} />
+          </DetailField>
+        </div>
+      ) : null}
+      <div className="sm:hidden">
+        <DetailField label="Type">
+          <span className="inline-flex items-center gap-1.5">
+            <InstitutionTypeIcon
+              type={institution.type}
+              className="text-neon-teal"
+            />
+            {INSTITUTION_TYPE_LABELS[institution.type]}
+          </span>
+        </DetailField>
+      </div>
       {institution.website ? (
         <DetailField label="Website">
           <a
@@ -63,6 +90,11 @@ export function InstitutionRowDetail({
       {institution.accreditedThrough ? (
         <DetailField label="Accreditation">
           <p>Accredited through {institution.accreditedThrough}</p>
+        </DetailField>
+      ) : null}
+      {notes ? (
+        <DetailField label="Notes">
+          <p className="break-words">{notes}</p>
         </DetailField>
       ) : null}
       {showContact ? (
