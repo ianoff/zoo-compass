@@ -358,7 +358,7 @@ export function InstitutionsTable({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-white shadow-sm [&_[data-slot=table-container]]:overflow-x-visible">
+    <div className="overflow-hidden rounded-xl border bg-white shadow-sm **:data-[slot=table-container]:overflow-x-visible">
       <div className="border-b px-4 py-3">
         <p className="text-sm font-medium tabular-nums">
           {institutions.length} of {totalCount} institutions
@@ -372,7 +372,7 @@ export function InstitutionsTable({
                 <TableHead
                   key={header.id}
                   className={cn(
-                    'px-1 py-2 whitespace-normal sm:px-3 md:px-4',
+                    'table-head-responsive',
                     getTableColumnClassName(header.id, showBenefitColumn),
                   )}
                 >
@@ -409,18 +409,18 @@ function getReciprocityRowBorderClass(
   reciprocity: InstitutionReciprocity,
 ): string {
   if (!reciprocity.participates) {
-    return 'border-l-2 border-l-transparent sm:border-l-4';
+    return 'row-border-tier-none';
   }
 
   if (reciprocity.tier === 'free') {
-    return 'border-l-2 border-l-[var(--neon-green)] sm:border-l-4';
+    return 'row-border-tier-green';
   }
 
   if (reciprocity.tier === '100-or-50') {
-    return 'border-l-2 border-l-[var(--neon-lime)] sm:border-l-4';
+    return 'row-border-tier-lime';
   }
 
-  return 'border-l-2 border-l-[var(--neon-teal)] sm:border-l-4';
+  return 'row-border-tier-teal';
 }
 
 function FragmentRow({
@@ -445,7 +445,7 @@ function FragmentRow({
       <TableRow
         className={cn(
           getReciprocityRowBorderClass(institution.reciprocity),
-          canExpand && 'hover:bg-muted/40 cursor-pointer',
+          canExpand && 'row-expandable',
         )}
         tabIndex={canExpand ? 0 : undefined}
         aria-expanded={canExpand ? isExpanded : undefined}
@@ -474,7 +474,7 @@ function FragmentRow({
           <TableCell
             key={cell.id}
             className={cn(
-              'px-1 py-1.5 align-top whitespace-normal sm:px-3 sm:py-2 md:px-4',
+              'table-cell-responsive',
               getTableColumnClassName(cell.column.id, Boolean(homeInstitution)),
             )}
           >

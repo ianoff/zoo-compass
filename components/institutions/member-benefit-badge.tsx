@@ -17,87 +17,57 @@ function BenefitLabel({ benefit }: { benefit: MemberBenefit }) {
 
   return (
     <>
-      <span className="lg:hidden">{shortLabel}</span>
-      <span className="hidden lg:inline">{benefit.label}</span>
+      <span className="label-compact">{shortLabel}</span>
+      <span className="label-full">{benefit.label}</span>
     </>
   );
+}
+
+function getBenefitTierClassName(benefit: MemberBenefit): string {
+  switch (benefit.kind) {
+    case 'no-reciprocity':
+      return 'badge-tier-none';
+    case 'home-facility':
+      return 'badge-tier-orange';
+    case 'free-admission':
+      return 'badge-tier-lime';
+    case 'other-benefits':
+      return 'badge-tier-green';
+    case '50-discount':
+      return 'badge-tier-teal';
+  }
+}
+
+function getBenefitIcon(benefit: MemberBenefit) {
+  switch (benefit.kind) {
+    case 'no-reciprocity':
+      return Ban;
+    case 'home-facility':
+      return Home;
+    case 'other-benefits':
+      return Sparkles;
+    case 'free-admission':
+    case '50-discount':
+      return Ticket;
+  }
 }
 
 export function MemberBenefitBadge({
   benefit,
   className,
 }: MemberBenefitBadgeProps) {
-  if (benefit.kind === 'no-reciprocity') {
-    return (
-      <Badge
-        variant="outline"
-        title={benefit.description}
-        className={cn(
-          'border-muted-foreground/30 bg-muted/30 text-muted-foreground',
-          className,
-        )}
-      >
-        <Ban />
-        <BenefitLabel benefit={benefit} />
-      </Badge>
-    );
-  }
-
-  if (benefit.kind === 'home-facility') {
-    return (
-      <Badge
-        variant="outline"
-        title={benefit.label}
-        className={cn(
-          'border-[color-mix(in_srgb,var(--neon-orange)_35%,white)] bg-[color-mix(in_srgb,var(--neon-orange)_15%,white)] text-[#7a3e00]',
-          className,
-        )}
-      >
-        <Home />
-        <BenefitLabel benefit={benefit} />
-      </Badge>
-    );
-  }
-
-  if (benefit.kind === 'free-admission') {
-    return (
-      <Badge
-        title={benefit.description}
-        className={cn(
-          'border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_35%,white)] text-[#2f3d00]',
-          className,
-        )}
-      >
-        <Ticket />
-        <BenefitLabel benefit={benefit} />
-      </Badge>
-    );
-  }
-
-  if (benefit.kind === 'other-benefits') {
-    return (
-      <Badge
-        title={benefit.description}
-        className={cn(
-          'border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_18%,white)] text-[#145a0d]',
-          className,
-        )}
-      >
-        <Sparkles />
-        <BenefitLabel benefit={benefit} />
-      </Badge>
-    );
-  }
+  const Icon = getBenefitIcon(benefit);
+  const tierClassName = getBenefitTierClassName(benefit);
+  const title =
+    benefit.kind === 'home-facility' ? benefit.label : benefit.description;
 
   return (
     <Badge
-      title={benefit.description}
-      className={cn(
-        'border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)] text-[#055f5f]',
-        className,
-      )}
+      variant={benefit.kind === 'no-reciprocity' ? 'outline' : undefined}
+      title={title}
+      className={cn(tierClassName, className)}
     >
-      <Ticket />
+      <Icon />
       <BenefitLabel benefit={benefit} />
     </Badge>
   );

@@ -18,35 +18,29 @@ type TierConfig = {
 const RECIPROCITY_TIER_CONFIG: Record<ReciprocityFilterKey, TierConfig> = {
   '50': {
     icon: Ticket,
-    inactive:
-      'border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_10%,white)] text-[#055f5f] hover:bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)]',
-    active: 'border-neon-teal bg-neon-teal hover:bg-neon-teal/90 text-white',
+    inactive: 'filter-tier-teal-inactive',
+    active: 'filter-tier-teal-active',
     iconInactive: 'text-neon-teal',
     iconActive: 'text-white',
   },
   '100-or-50': {
     icon: Percent,
-    inactive:
-      'border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_20%,white)] text-[#2f3d00] hover:bg-[color-mix(in_srgb,var(--neon-lime)_30%,white)]',
-    active:
-      'border-neon-lime bg-neon-lime hover:bg-neon-lime/90 text-[#2f3d00]',
+    inactive: 'filter-tier-lime-inactive',
+    active: 'filter-tier-lime-active',
     iconInactive: 'text-[#5a7300]',
     iconActive: 'text-[#2f3d00]',
   },
   free: {
     icon: Sparkles,
-    inactive:
-      'border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_12%,white)] text-[#145a0d] hover:bg-[color-mix(in_srgb,var(--neon-green)_20%,white)]',
-    active: 'border-neon-green bg-neon-green hover:bg-neon-green/90 text-white',
+    inactive: 'filter-tier-green-inactive',
+    active: 'filter-tier-green-active',
     iconInactive: 'text-neon-green',
     iconActive: 'text-white',
   },
   'no-reciprocity': {
     icon: Ban,
-    inactive:
-      'border-muted-foreground/30 bg-muted/30 text-muted-foreground hover:bg-muted/50',
-    active:
-      'border-muted-foreground/50 bg-muted-foreground text-background hover:bg-muted-foreground/90',
+    inactive: 'filter-tier-none-inactive',
+    active: 'filter-tier-none-active',
     iconInactive: 'text-muted-foreground',
     iconActive: 'text-background',
   },
@@ -73,7 +67,7 @@ export function ReciprocityFilterButton({
       variant="outline"
       aria-pressed={isActive}
       className={cn(
-        'h-auto w-full min-w-0 justify-start gap-2 px-3 py-2 text-left text-[15px] whitespace-normal',
+        'filter-row-button',
         isActive ? config.active : config.inactive,
       )}
       onClick={onClick}

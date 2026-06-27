@@ -94,7 +94,7 @@ export function UserSettingsPanel({
         : null;
 
   return (
-    <section className="border-neon-orange/40 overflow-hidden rounded-xl border bg-white shadow-sm">
+    <section className="panel-settings">
       <div className="space-y-6 p-4 sm:p-5">
         <div className="space-y-3">
           <div>
@@ -122,7 +122,7 @@ export function UserSettingsPanel({
                   aria-expanded={homeOpen}
                   aria-disabled={!isHydrated ? true : undefined}
                   className={cn(
-                    'focus-visible:ring-neon-orange/40 w-full justify-between font-normal',
+                    'combobox-trigger focus-ring-orange w-full font-normal',
                     isHomeSelectorLocked && 'pointer-events-none opacity-50',
                   )}
                 >
@@ -136,7 +136,7 @@ export function UserSettingsPanel({
                   <ChevronsUpDown className="text-muted-foreground size-4 shrink-0" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+              <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
                 <Command>
                   <CommandInput placeholder="Search your home zoo or aquarium..." />
                   <CommandList>
@@ -262,7 +262,7 @@ export function UserSettingsPanel({
                     event.target.value.replace(/\D/g, '').slice(0, 5),
                   )
                 }
-                className="focus-visible:ring-neon-orange/40"
+                className="focus-ring-orange"
               />
               {zipError ? (
                 <p className="text-destructive text-sm">{zipError}</p>

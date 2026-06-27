@@ -108,7 +108,7 @@ export function InstitutionFiltersPanel({
   const hasFilters = hasActiveFilters(filters);
 
   return (
-    <div className="border-neon-teal/40 relative flex w-full min-w-0 flex-col rounded-xl border bg-white p-4 text-[15px] shadow-sm lg:max-h-[calc(100dvh-3rem)]">
+    <div className="panel-filters">
       <Button
         type="button"
         variant="outline"
@@ -125,9 +125,7 @@ export function InstitutionFiltersPanel({
         Clear
       </Button>
 
-      <p className="text-neon-teal shrink-0 pr-20 text-[13px] font-semibold tracking-[0.18em] uppercase">
-        Filters
-      </p>
+      <p className="panel-filters-title">Filters</p>
 
       <div className="mt-4 space-y-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
         <InstitutionSearchCombobox
@@ -140,7 +138,7 @@ export function InstitutionFiltersPanel({
           value={filters.country ?? 'all'}
           onValueChange={handleCountryChange}
         >
-          <SelectTrigger className="h-auto w-full min-w-0 py-2.5 text-[15px]">
+          <SelectTrigger className="combobox-trigger">
             <SelectValue placeholder="All countries" />
           </SelectTrigger>
           <SelectContent>
@@ -159,7 +157,7 @@ export function InstitutionFiltersPanel({
             updateFilters({ region: region === 'all' ? null : region })
           }
         >
-          <SelectTrigger className="h-auto w-full min-w-0 py-2.5 text-[15px]">
+          <SelectTrigger className="combobox-trigger">
             <SelectValue placeholder="All regions" />
           </SelectTrigger>
           <SelectContent>
@@ -182,9 +180,7 @@ export function InstitutionFiltersPanel({
         ) : null}
 
         <div>
-          <p className="text-muted-foreground mb-2 text-[13px] font-medium tracking-wide uppercase">
-            Reciprocity
-          </p>
+          <p className="panel-section-label">Reciprocity</p>
           <label className="mb-3 flex cursor-pointer items-center gap-2.5 leading-5.5">
             <Checkbox
               checked={filters.hideNonParticipating}
@@ -207,9 +203,7 @@ export function InstitutionFiltersPanel({
         </div>
 
         <div>
-          <p className="text-muted-foreground mb-2 text-[13px] font-medium tracking-wide uppercase">
-            Institution type
-          </p>
+          <p className="panel-section-label">Institution type</p>
           <div className="flex flex-col gap-1.5">
             {uniqueValues.types.map((type) => {
               const isActive = filters.types.includes(type);
@@ -220,7 +214,7 @@ export function InstitutionFiltersPanel({
                   size="sm"
                   variant={isActive ? 'default' : 'outline'}
                   className={cn(
-                    'h-auto w-full min-w-0 justify-start gap-2 px-3 py-2 text-left text-[14px] whitespace-normal',
+                    'filter-row-button text-[14px]',
                     isActive &&
                       'bg-neon-teal hover:bg-neon-teal/90 border-neon-teal text-white',
                   )}
@@ -270,7 +264,7 @@ function InstitutionSearchCombobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="focus-visible:ring-neon-teal/40 h-auto w-full min-w-0 justify-between py-2.5 text-[15px] font-normal"
+          className="combobox-trigger focus-ring-teal"
         >
           <span className="truncate text-left">
             {value ? `Search: ${value}` : 'Search by name or city'}
@@ -357,7 +351,7 @@ function StateMultiSelect({
           variant="outline"
           aria-disabled={isLocked ? true : undefined}
           className={cn(
-            'h-auto w-full min-w-0 justify-between py-2.5 text-[15px] font-normal',
+            'combobox-trigger',
             showLockedStyle && 'pointer-events-none opacity-50',
           )}
         >
@@ -365,7 +359,7 @@ function StateMultiSelect({
           <ChevronsUpDown className="text-muted-foreground size-4 shrink-0" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-2">
+      <PopoverContent className="w-(--radix-popover-trigger-width) p-2">
         <div className="max-h-64 space-y-1 overflow-y-auto">
           {states.map((state) => (
             <label

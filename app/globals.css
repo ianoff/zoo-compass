@@ -197,4 +197,129 @@
       var(--neon-orange) 100%
     );
   }
+
+  /* Tier 1: reciprocity / benefit badge tiers */
+  .badge-tier-teal {
+    @apply border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)] text-[#055f5f];
+  }
+
+  .badge-tier-lime {
+    @apply border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_35%,white)] text-[#2f3d00];
+  }
+
+  .badge-tier-green {
+    @apply border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_18%,white)] text-[#145a0d];
+  }
+
+  .badge-tier-orange {
+    @apply border-[color-mix(in_srgb,var(--neon-orange)_35%,white)] bg-[color-mix(in_srgb,var(--neon-orange)_15%,white)] text-[#7a3e00];
+  }
+
+  .badge-tier-none {
+    @apply border-muted-foreground/30 bg-muted/30 text-muted-foreground;
+  }
+
+  .filter-tier-teal-inactive {
+    @apply border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_10%,white)] text-[#055f5f] hover:bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)];
+  }
+
+  .filter-tier-lime-inactive {
+    @apply border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_20%,white)] text-[#2f3d00] hover:bg-[color-mix(in_srgb,var(--neon-lime)_30%,white)];
+  }
+
+  .filter-tier-green-inactive {
+    @apply border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_12%,white)] text-[#145a0d] hover:bg-[color-mix(in_srgb,var(--neon-green)_20%,white)];
+  }
+
+  .filter-tier-none-inactive {
+    @apply border-muted-foreground/30 bg-muted/30 text-muted-foreground hover:bg-muted/50;
+  }
+
+  .filter-tier-teal-active {
+    @apply border-neon-teal bg-neon-teal hover:bg-neon-teal/90 text-white;
+  }
+
+  .filter-tier-lime-active {
+    @apply border-neon-lime bg-neon-lime hover:bg-neon-lime/90 text-[#2f3d00];
+  }
+
+  .filter-tier-green-active {
+    @apply border-neon-green bg-neon-green hover:bg-neon-green/90 text-white;
+  }
+
+  .filter-tier-none-active {
+    @apply border-muted-foreground/50 bg-muted-foreground text-background hover:bg-muted-foreground/90;
+  }
+
+  /* Tier 2: responsive short/full labels */
+  .label-compact {
+    @apply lg:hidden;
+  }
+
+  .label-full {
+    @apply hidden lg:inline;
+  }
+
+  /* Tier 3: panel shells */
+  .panel-filters {
+    @apply border-neon-teal/40 relative flex w-full min-w-0 flex-col rounded-xl border bg-white p-4 text-[15px] shadow-sm lg:max-h-[calc(100dvh-3rem)];
+  }
+
+  .panel-settings {
+    @apply border-neon-orange/40 overflow-hidden rounded-xl border bg-white shadow-sm;
+  }
+
+  .panel-section-label {
+    @apply text-muted-foreground mb-2 text-[13px] font-medium tracking-wide uppercase;
+  }
+
+  .panel-filters-title {
+    @apply text-neon-teal shrink-0 pr-20 text-[13px] font-semibold tracking-[0.18em] uppercase;
+  }
+
+  /* Tier 4: filter / combobox controls */
+  .filter-row-button {
+    @apply h-auto w-full min-w-0 justify-start gap-2 px-3 py-2 text-left text-[15px] whitespace-normal;
+  }
+
+  .combobox-trigger {
+    @apply h-auto w-full min-w-0 justify-between py-2.5 text-[15px] font-normal;
+  }
+
+  .focus-ring-teal {
+    @apply focus-visible:ring-neon-teal/40;
+  }
+
+  .focus-ring-orange {
+    @apply focus-visible:ring-neon-orange/40;
+  }
+
+  /* Tier 5: institutions table */
+  .table-cell-responsive {
+    @apply px-1 py-1.5 align-top whitespace-normal sm:px-3 sm:py-2 md:px-4;
+  }
+
+  .table-head-responsive {
+    @apply px-1 py-2 whitespace-normal sm:px-3 md:px-4;
+  }
+
+  .row-border-tier-none {
+    @apply border-l-2 border-l-transparent sm:border-l-4;
+  }
+
+  .row-border-tier-green {
+    @apply border-l-neon-green border-l-2 sm:border-l-4;
+  }
+
+  .row-border-tier-lime {
+    @apply border-l-neon-lime border-l-2 sm:border-l-4;
+  }
+
+  .row-border-tier-teal {
+    @apply border-l-neon-teal border-l-2 sm:border-l-4;
+  }
+
+  .row-expandable {
+    @apply hover:bg-muted/40 cursor-pointer;
+  }
 }
