@@ -15,6 +15,7 @@ describe('ReciprocityBadge', () => {
     );
 
     expect(screen.getByText('No reciprocity')).toBeInTheDocument();
+    expect(screen.getByText('None')).toBeInTheDocument();
   });
 
   it('renders participating tier badges', () => {
@@ -30,6 +31,7 @@ describe('ReciprocityBadge', () => {
     );
 
     expect(screen.getByText('50% off')).toBeInTheDocument();
+    expect(screen.getByText('50%')).toBeInTheDocument();
 
     rerender(
       <ReciprocityBadge
@@ -42,6 +44,7 @@ describe('ReciprocityBadge', () => {
       />,
     );
     expect(screen.getByText('100% or 50%')).toBeInTheDocument();
+    expect(screen.getByText('100/50')).toBeInTheDocument();
 
     rerender(
       <ReciprocityBadge
@@ -54,5 +57,6 @@ describe('ReciprocityBadge', () => {
       />,
     );
     expect(screen.getByText('Free admission')).toBeInTheDocument();
+    expect(screen.getByText('Free')).toBeInTheDocument();
   });
 });

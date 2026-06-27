@@ -93,6 +93,13 @@ export const RECIPROCITY_FILTER_LABELS: Record<ReciprocityFilterKey, string> = {
   'no-reciprocity': 'No reciprocity',
 };
 
+export const RECIPROCITY_SHORT_LABELS: Record<ReciprocityFilterKey, string> = {
+  '50': '50%',
+  '100-or-50': '100/50',
+  free: 'Free',
+  'no-reciprocity': 'None',
+};
+
 export function formatLocation(institution: Institution): string {
   const hasCity = institution.city.trim().length > 0;
 
