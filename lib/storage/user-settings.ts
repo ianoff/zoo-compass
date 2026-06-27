@@ -1,3 +1,5 @@
+import { invalidateJsonCache } from '@/lib/storage/local-storage';
+
 export const LEGACY_SETTINGS_MODE_KEY = 'zoo-compass:settings-mode';
 export const DISTANCE_ORIGIN_KEY = 'zoo-compass:distance-origin';
 export const HOME_FACILITY_STORAGE_KEY = 'zoo-compass:home-facility-id';
@@ -43,6 +45,7 @@ export function migrateLegacyDistanceOrigin(): DistanceOrigin | null {
   }
 
   window.localStorage.removeItem(LEGACY_SETTINGS_MODE_KEY);
+  invalidateJsonCache(LEGACY_SETTINGS_MODE_KEY);
 
   if (!legacy) {
     return null;

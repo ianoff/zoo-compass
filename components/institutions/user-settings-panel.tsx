@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react';
 import { Check, ChevronsUpDown, X } from 'lucide-react';
 
 import { ReciprocityBadge } from '@/components/institutions/reciprocity-badge';
-import { useIsMounted } from '@/hooks/use-is-mounted';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -56,8 +55,7 @@ export function UserSettingsPanel({
   isHydrated,
 }: UserSettingsPanelProps) {
   const [homeOpen, setHomeOpen] = useState(false);
-  const isMounted = useIsMounted();
-  const isHomeSelectorLocked = !isMounted || !isHydrated;
+  const isHomeSelectorLocked = !isHydrated;
 
   const sortedInstitutions = useMemo(
     () => [...institutions].sort((a, b) => a.name.localeCompare(b.name)),
@@ -122,7 +120,7 @@ export function UserSettingsPanel({
                   variant="outline"
                   role="combobox"
                   aria-expanded={homeOpen}
-                  aria-disabled={isMounted && !isHydrated ? true : undefined}
+                  aria-disabled={!isHydrated ? true : undefined}
                   className={cn(
                     'focus-visible:ring-neon-orange/40 w-full justify-between font-normal',
                     isHomeSelectorLocked && 'pointer-events-none opacity-50',

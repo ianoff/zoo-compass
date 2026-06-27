@@ -90,7 +90,10 @@ function RowExpandChevron({
 }) {
   if (!hasDetail) {
     return (
-      <span className={cn('inline-block w-4 shrink-0', className)} aria-hidden />
+      <span
+        className={cn('inline-block w-4 shrink-0', className)}
+        aria-hidden
+      />
     );
   }
 
@@ -181,16 +184,16 @@ export function InstitutionsTable({
                 hasDetail={hasDetail}
               />
               <div className="min-w-0">
-                <p className="flex items-start gap-1.5 font-medium break-words">
+                <p className="flex items-start gap-1.5 font-medium wrap-break-word">
                   {isHomeRow ? (
                     <Star
-                      className="mt-0.5 size-4 shrink-0 fill-[var(--neon-pink)] text-[var(--neon-pink)]"
+                      className="fill-neon-pink text-neon-pink mt-0.5 size-4 shrink-0"
                       aria-label="Your home facility"
                     />
                   ) : null}
                   <span>{row.original.name}</span>
                 </p>
-                <p className="text-muted-foreground text-xs break-words">
+                <p className="text-muted-foreground text-xs wrap-break-word">
                   {formatLocation(row.original)}
                 </p>
               </div>
@@ -205,7 +208,7 @@ export function InstitutionsTable({
           <SortableTableHead column={column} label="Type" />
         ),
         cell: ({ row }) => (
-          <span className="text-muted-foreground inline-flex items-start gap-1.5 break-words">
+          <span className="text-muted-foreground inline-flex items-start gap-1.5 wrap-break-word">
             <InstitutionTypeIcon
               type={row.original.type}
               className="text-neon-teal mt-0.5"
@@ -307,7 +310,7 @@ export function InstitutionsTable({
           return (
             <span
               className={cn(
-                'block text-sm break-words',
+                'block text-sm wrap-break-word',
                 notes ? 'text-foreground' : 'text-muted-foreground',
               )}
               title={notes}
@@ -472,10 +475,7 @@ function FragmentRow({
             key={cell.id}
             className={cn(
               'px-1 py-1.5 align-top whitespace-normal sm:px-3 sm:py-2 md:px-4',
-              getTableColumnClassName(
-                cell.column.id,
-                Boolean(homeInstitution),
-              ),
+              getTableColumnClassName(cell.column.id, Boolean(homeInstitution)),
             )}
           >
             {flexRender(cell.column.columnDef.cell, cell.getContext())}

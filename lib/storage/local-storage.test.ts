@@ -1,10 +1,11 @@
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { readJson, writeJson } from './local-storage';
+import { invalidateJsonCache, readJson, writeJson } from './local-storage';
 
 describe('local-storage', () => {
   afterEach(() => {
     window.localStorage.clear();
+    invalidateJsonCache();
   });
 
   it('returns fallback when key is missing', () => {

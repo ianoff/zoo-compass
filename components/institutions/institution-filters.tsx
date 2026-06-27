@@ -129,7 +129,7 @@ export function InstitutionFiltersPanel({
         Filters
       </p>
 
-      <div className="mt-4 min-h-0 space-y-4 overflow-y-auto overscroll-contain lg:flex-1 lg:pr-1">
+      <div className="mt-4 space-y-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain lg:pr-1">
         <InstitutionSearchCombobox
           institutions={institutions}
           value={filters.search}

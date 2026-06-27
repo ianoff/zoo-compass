@@ -1,8 +1,12 @@
 'use client';
 
-import { useCallback, useSyncExternalStore } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 
-import { readJson, writeJson } from '@/lib/storage/local-storage';
+import {
+  invalidateJsonCache,
+  readJson,
+  writeJson,
+} from '@/lib/storage/local-storage';
 
 const STORAGE_LISTENERS_KEY = '__zooCompassStorageListeners__';
 
@@ -26,48 +30,56 @@ function emitStorageChange() {
   }
 }
 
-function subscribe(onStoreChange: () => void) {
-  const listeners = getStorageListeners();
-  listeners.add(onStoreChange);
-
-  const handleStorageEvent = (event: StorageEvent) => {
-    if (event.storageArea === window.localStorage) {
-      onStoreChange();
-    }
-  };
-
-  window.addEventListener('storage', handleStorageEvent);
-
-  return () => {
-    listeners.delete(onStoreChange);
-    window.removeEventListener('storage', handleStorageEvent);
-  };
-}
-
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  const getSnapshot = useCallback(
-    () => readJson(key, initialValue),
-    [key, initialValue],
-  );
+  const [value, setValue] = useState(initialValue);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  const value = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    () => initialValue,
-  );
+  useLayoutEffect(() => {
+    setValue(readJson(key, initialValue));
+    setIsHydrated(true);
 
-  const setStoredValue = (next: T | ((current: T) => T)) => {
-    const current = readJson(key, initialValue);
-    const resolved =
-      typeof next === 'function' ? (next as (current: T) => T)(current) : next;
-    writeJson(key, resolved);
-    emitStorageChange();
-  };
+    const onStoreChange = () => {
+      setValue(readJson(key, initialValue));
+    };
 
-  const isHydrated = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false,
+    const listeners = getStorageListeners();
+    listeners.add(onStoreChange);
+
+    const handleStorageEvent = (event: StorageEvent) => {
+      if (event.storageArea !== window.localStorage) {
+        return;
+      }
+
+      if (event.key) {
+        invalidateJsonCache(event.key);
+      } else {
+        invalidateJsonCache();
+      }
+
+      onStoreChange();
+    };
+
+    window.addEventListener('storage', handleStorageEvent);
+
+    return () => {
+      listeners.delete(onStoreChange);
+      window.removeEventListener('storage', handleStorageEvent);
+    };
+  }, [key, initialValue]);
+
+  const setStoredValue = useCallback(
+    (next: T | ((current: T) => T)) => {
+      setValue((current) => {
+        const resolved =
+          typeof next === 'function'
+            ? (next as (current: T) => T)(current)
+            : next;
+        writeJson(key, resolved);
+        emitStorageChange();
+        return resolved;
+      });
+    },
+    [key],
   );
 
   return [value, setStoredValue, isHydrated] as const;

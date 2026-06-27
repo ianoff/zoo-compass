@@ -30,7 +30,7 @@ function DetailField({ label, children, contentClassName }: DetailFieldProps) {
       </p>
       <div
         className={cn(
-          'text-foreground min-w-0 text-sm leading-6 break-words',
+          'text-foreground min-w-0 text-sm leading-6 wrap-break-word',
           contentClassName,
         )}
       >
@@ -51,7 +51,7 @@ export function InstitutionRowDetail({
   const notes = institution.reciprocity.notes?.trim();
 
   return (
-    <div className="institution-row-detail bg-muted/30 grid w-full min-w-0 grid-cols-1 gap-6 px-4 py-4 sm:px-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="institution-row-detail bg-muted/30 grid w-full min-w-0 grid-cols-1 gap-6 px-4 py-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
       {showTheirTier ? (
         <div className="sm:hidden">
           <DetailField label="Their tier">
@@ -84,7 +84,7 @@ export function InstitutionRowDetail({
       ) : null}
       {formattedAddress ? (
         <DetailField label="Address">
-          <p className="break-words">{formattedAddress}</p>
+          <p className="wrap-break-word">{formattedAddress}</p>
         </DetailField>
       ) : null}
       {institution.accreditedThrough ? (
@@ -94,7 +94,7 @@ export function InstitutionRowDetail({
       ) : null}
       {notes ? (
         <DetailField label="Notes">
-          <p className="break-words">{notes}</p>
+          <p className="wrap-break-word">{notes}</p>
         </DetailField>
       ) : null}
       {showContact ? (
@@ -118,7 +118,7 @@ export function InstitutionRowDetail({
             {institution.contact?.phone ? (
               <a
                 href={`tel:${institution.contact.phone.replace(/\s*x\s*/i, ',')}`}
-                className="inline-flex max-w-full items-start gap-1.5 break-words"
+                className="inline-flex max-w-full items-start gap-1.5 wrap-break-word"
               >
                 <Phone
                   className="mt-0.5 size-3.5 shrink-0 opacity-70"
