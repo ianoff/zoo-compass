@@ -18,7 +18,7 @@ Based on the [AZA Reciprocity Chart](https://www.aza.org/reciprocity) as of 2026
 
 ## Prerequisites
 
-- Node.js 20+ (see `.nvmrc`)
+- Node.js 24+ (see `.nvmrc`)
 - Yarn (enabled via Corepack — see `packageManager` in `package.json`)
 
 ## Getting started
