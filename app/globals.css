@@ -198,59 +198,6 @@
     );
   }
 
-  /* Tier 1: reciprocity / benefit badge tiers */
-  .badge-tier-teal {
-    @apply border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)] text-[#055f5f];
-  }
-
-  .badge-tier-lime {
-    @apply border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_35%,white)] text-[#2f3d00];
-  }
-
-  .badge-tier-green {
-    @apply border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_18%,white)] text-[#145a0d];
-  }
-
-  .badge-tier-orange {
-    @apply border-[color-mix(in_srgb,var(--neon-orange)_35%,white)] bg-[color-mix(in_srgb,var(--neon-orange)_15%,white)] text-[#7a3e00];
-  }
-
-  .badge-tier-none {
-    @apply border-muted-foreground/30 bg-muted/30 text-muted-foreground;
-  }
-
-  .filter-tier-teal-inactive {
-    @apply border-[color-mix(in_srgb,var(--neon-teal)_35%,white)] bg-[color-mix(in_srgb,var(--neon-teal)_10%,white)] text-[#055f5f] hover:bg-[color-mix(in_srgb,var(--neon-teal)_18%,white)];
-  }
-
-  .filter-tier-lime-inactive {
-    @apply border-[color-mix(in_srgb,var(--neon-lime)_45%,white)] bg-[color-mix(in_srgb,var(--neon-lime)_20%,white)] text-[#2f3d00] hover:bg-[color-mix(in_srgb,var(--neon-lime)_30%,white)];
-  }
-
-  .filter-tier-green-inactive {
-    @apply border-[color-mix(in_srgb,var(--neon-green)_35%,white)] bg-[color-mix(in_srgb,var(--neon-green)_12%,white)] text-[#145a0d] hover:bg-[color-mix(in_srgb,var(--neon-green)_20%,white)];
-  }
-
-  .filter-tier-none-inactive {
-    @apply border-muted-foreground/30 bg-muted/30 text-muted-foreground hover:bg-muted/50;
-  }
-
-  .filter-tier-teal-active {
-    @apply border-neon-teal bg-neon-teal hover:bg-neon-teal/90 text-white;
-  }
-
-  .filter-tier-lime-active {
-    @apply border-neon-lime bg-neon-lime hover:bg-neon-lime/90 text-[#2f3d00];
-  }
-
-  .filter-tier-green-active {
-    @apply border-neon-green bg-neon-green hover:bg-neon-green/90 text-white;
-  }
-
-  .filter-tier-none-active {
-    @apply border-muted-foreground/50 bg-muted-foreground text-background hover:bg-muted-foreground/90;
-  }
-
   /* Tier 2: responsive short/full labels */
   .label-compact {
     @apply lg:hidden;
@@ -278,14 +225,6 @@
   }
 
   /* Tier 4: filter / combobox controls */
-  .filter-row-button {
-    @apply h-auto w-full min-w-0 justify-start gap-2 px-3 py-2 text-left text-[15px] whitespace-normal;
-  }
-
-  .combobox-trigger {
-    @apply h-auto w-full min-w-0 justify-between py-2.5 text-[15px] font-normal;
-  }
-
   .focus-ring-teal {
     @apply focus-visible:ring-neon-teal/40;
   }
@@ -294,15 +233,7 @@
     @apply focus-visible:ring-neon-orange/40;
   }
 
-  /* Tier 5: institutions table */
-  .table-cell-responsive {
-    @apply px-1 py-1.5 align-top whitespace-normal sm:px-3 sm:py-2 md:px-4;
-  }
-
-  .table-head-responsive {
-    @apply px-1 py-2 whitespace-normal sm:px-3 md:px-4;
-  }
-
+  /* Tier 5: institutions table (row borders — no shadcn utility conflicts) */
   .row-border-tier-none {
     @apply border-l-2 border-l-transparent sm:border-l-4;
   }
@@ -320,6 +251,184 @@
   }
 
   .row-expandable {
-    @apply hover:bg-muted/40 cursor-pointer;
+    @apply cursor-pointer hover:bg-muted/40;
+  }
+}
+
+/*
+ * Unlayered overrides for shadcn Badge/Button utilities.
+ * @layer components loses to utility classes from cva(), so tier colors
+ * and filter/combobox layout must live here with !important.
+ */
+.badge-tier-teal {
+  border-color: color-mix(in srgb, var(--neon-teal) 35%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-teal) 18%, white) !important;
+  color: #055f5f !important;
+}
+
+.badge-tier-lime {
+  border-color: color-mix(in srgb, var(--neon-lime) 45%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-lime) 35%, white) !important;
+  color: #2f3d00 !important;
+}
+
+.badge-tier-green {
+  border-color: color-mix(in srgb, var(--neon-green) 35%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-green) 18%, white) !important;
+  color: #145a0d !important;
+}
+
+.badge-tier-orange {
+  border-color: color-mix(in srgb, var(--neon-orange) 35%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-orange) 15%, white) !important;
+  color: #7a3e00 !important;
+}
+
+.badge-tier-none {
+  border-color: color-mix(in srgb, var(--muted-foreground) 30%, transparent) !important;
+  background-color: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+  color: var(--muted-foreground) !important;
+}
+
+.filter-tier-teal-inactive {
+  border-color: color-mix(in srgb, var(--neon-teal) 35%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-teal) 10%, white) !important;
+  color: #055f5f !important;
+}
+
+.filter-tier-teal-inactive:hover {
+  background-color: color-mix(in srgb, var(--neon-teal) 18%, white) !important;
+}
+
+.filter-tier-lime-inactive {
+  border-color: color-mix(in srgb, var(--neon-lime) 45%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-lime) 20%, white) !important;
+  color: #2f3d00 !important;
+}
+
+.filter-tier-lime-inactive:hover {
+  background-color: color-mix(in srgb, var(--neon-lime) 30%, white) !important;
+}
+
+.filter-tier-green-inactive {
+  border-color: color-mix(in srgb, var(--neon-green) 35%, white) !important;
+  background-color: color-mix(in srgb, var(--neon-green) 12%, white) !important;
+  color: #145a0d !important;
+}
+
+.filter-tier-green-inactive:hover {
+  background-color: color-mix(in srgb, var(--neon-green) 20%, white) !important;
+}
+
+.filter-tier-none-inactive {
+  border-color: color-mix(in srgb, var(--muted-foreground) 30%, transparent) !important;
+  background-color: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+  color: var(--muted-foreground) !important;
+}
+
+.filter-tier-none-inactive:hover {
+  background-color: color-mix(in srgb, var(--muted) 50%, transparent) !important;
+}
+
+.filter-tier-teal-active {
+  border-color: var(--neon-teal) !important;
+  background-color: var(--neon-teal) !important;
+  color: white !important;
+}
+
+.filter-tier-teal-active:hover {
+  background-color: color-mix(in srgb, var(--neon-teal) 90%, transparent) !important;
+}
+
+.filter-tier-lime-active {
+  border-color: var(--neon-lime) !important;
+  background-color: var(--neon-lime) !important;
+  color: #2f3d00 !important;
+}
+
+.filter-tier-lime-active:hover {
+  background-color: color-mix(in srgb, var(--neon-lime) 90%, transparent) !important;
+}
+
+.filter-tier-green-active {
+  border-color: var(--neon-green) !important;
+  background-color: var(--neon-green) !important;
+  color: white !important;
+}
+
+.filter-tier-green-active:hover {
+  background-color: color-mix(in srgb, var(--neon-green) 90%, transparent) !important;
+}
+
+.filter-tier-none-active {
+  border-color: color-mix(in srgb, var(--muted-foreground) 50%, transparent) !important;
+  background-color: var(--muted-foreground) !important;
+  color: var(--background) !important;
+}
+
+.filter-tier-none-active:hover {
+  background-color: color-mix(in srgb, var(--muted-foreground) 90%, transparent) !important;
+}
+
+.filter-row-button {
+  height: auto !important;
+  width: 100%;
+  min-width: 0;
+  justify-content: flex-start !important;
+  gap: 0.5rem;
+  padding-inline: 0.75rem;
+  padding-block: 0.5rem;
+  text-align: left !important;
+  font-size: 15px;
+  white-space: normal;
+}
+
+.combobox-trigger {
+  height: auto !important;
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between !important;
+  padding-block: 0.625rem;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.table-cell-responsive {
+  padding-inline: 0.25rem;
+  padding-block: 0.375rem;
+  vertical-align: top;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+@media (min-width: 40rem) {
+  .table-cell-responsive {
+    padding-inline: 0.75rem;
+    padding-block: 0.5rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .table-cell-responsive {
+    padding-inline: 1rem;
+  }
+}
+
+.table-head-responsive {
+  padding-inline: 0.25rem;
+  padding-block: 0.5rem;
+  white-space: normal !important;
+}
+
+@media (min-width: 40rem) {
+  .table-head-responsive {
+    padding-inline: 0.75rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .table-head-responsive {
+    padding-inline: 1rem;
   }
 }

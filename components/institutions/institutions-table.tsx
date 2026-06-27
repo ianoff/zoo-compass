@@ -75,7 +75,7 @@ function getTableColumnClassName(
       (homeInstitutionSet ? 'w-[32%] sm:w-[14%]' : 'w-[18%] sm:w-[14%]'),
     columnId === 'distance' &&
       (homeInstitutionSet ? 'w-[22%] sm:w-[12%]' : 'w-[14%] sm:w-[12%]'),
-    columnId === 'notes' && 'hidden w-[18%] lg:table-cell',
+    columnId === 'notes' && 'hidden max-w-0 w-[18%] lg:table-cell',
   );
 }
 
