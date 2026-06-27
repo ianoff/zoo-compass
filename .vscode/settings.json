@@ -1,0 +1,21 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.colorDecorators": true,
+  "editor.defaultColorDecorators": "always",
+  "css.validate": false,
+  "css.lint.unknownAtRules": "ignore",
+  "css.customData": [".vscode/tailwind.css-data.json"],
+  "tailwindCSS.experimental.configFile": "app/globals.css",
+  "tailwindCSS.colorDecorators": true,
+  "tailwindCSS.includeLanguages": {
+    "css": "css"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

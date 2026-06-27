@@ -1,0 +1,52 @@
+# dependencies
+node_modules
+package-lock.json
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+coverage
+
+# next.js
+.next/
+out/
+build/
+dist/
+
+# production
+*.tsbuildinfo
+next-env.d.ts
+
+# env files
+.env*
+!.env.example
+
+# fetched AZA directory cache (see yarn data:fetch-aza)
+data/source/.cache/
+
+# vercel
+.vercel
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# misc
+.DS_Store
+*.pem
+.cursor/
+.idea/
+Thumbs.db
+
+# typescript
+*.tsbuildinfo
+
+# vitest
+.vitest
